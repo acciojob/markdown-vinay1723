@@ -2,34 +2,32 @@ import React, { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 
 const MarkdownEditor = () => {
-  // Initial string exactly as test expects
-  const [text, setText] = useState("Hello, Markdown! # Heading");
+  // Initial string with heading at start of line
+  const [text, setText] = useState("# Heading");
+
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
-    const timer = setTimeout(() => setLoading(false), 150);
+    const timer = setTimeout(() => setLoading(false), 100);
     return () => clearTimeout(timer);
   }, [text]);
 
-  // Preprocess text to ensure heading is on its own line for rendering
-  const processedText = text.replace(/# /, "\n# ");
-
   return (
     <div className="app">
-      {/* Markdown input */}
+      {/* Markdown Input Area */}
       <textarea
         className="textarea"
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
 
-      {/* Preview area */}
+      {/* Markdown Preview Area */}
       <div className="preview">
         {loading ? (
           <p className="loading">Loading...</p>
         ) : (
-          <ReactMarkdown>{processedText}</ReactMarkdown>
+          <ReactMarkdown>{text}</ReactMarkdown>
         )}
       </div>
     </div>
